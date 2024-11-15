@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "embedded",
+			"path": "../../../VSCode/Hackathon_2024_HN_TEAM/embedded"
+		},
+		{
+			"name": "advertisment_monitoring",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
