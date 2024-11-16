@@ -56,12 +56,15 @@ func InputHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
+	labels := make(map[string]string)
 	if metric, ok := metrics[inputData.Name]; !ok {
-
+		for _, label := range inputData.Labels {
+			labels[label.Name] = label.Value
+		}
 		metric = promauto.NewGauge(prometheus.GaugeOpts{
 			Name:        inputData.Name,
 			Help:        "_______",
-			ConstLabels: map[string]string{},
+			ConstLabels: labels,
 		})
 		metric.Set(inputData.Value)
 		metrics[inputData.Name] = metric
