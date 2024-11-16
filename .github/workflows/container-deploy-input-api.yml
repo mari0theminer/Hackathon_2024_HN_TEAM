@@ -16,9 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.7
 
-      # The 'cd inputAPI' step is not needed because we specify the context in the Docker build step
-      # - run: cd inputAPI
-
       - name: 'Login to GitHub Container Registry'
         uses: docker/login-action@v1
         with:
@@ -27,10 +24,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build and push Docker images
-        uses: docker/build-push-action@v2 # Update to v2 since v6.7.0 does not exist
+        uses: docker/build-push-action@v2
         with:
-          context: ./inputAPI/.
-          file: ./inputAPI/Dockerfile 
+          context: ./inputAPI # The directory containing the Dockerfile
+          file: Dockerfile # Simplified path to Dockerfile since context is already set
           push: true
           tags: |
             ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:latest
