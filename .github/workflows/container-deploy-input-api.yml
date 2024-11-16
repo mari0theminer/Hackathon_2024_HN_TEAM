@@ -24,7 +24,7 @@ jobs:
       uses: docker/build-push-action@v6.7.0
       with:
         context: ./inputAPI
-        file: ./inputAPI/dockerfile
+        file: ./dockerfile
         push: true
         tags: ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:latest, ghcr.io/mari0theminer/mari0theminer/hackathon_2024_hn_team-input-api:${{ github.run_number }}
               
