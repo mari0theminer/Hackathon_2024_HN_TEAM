@@ -4,14 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
+	"os"
 )
 
 const APIKeyHeader = "X-API-Key"
-const ExpectedAPIKey = "your_expected_api_key_here"
+
+var ExpectedAPIKey = "your_expected_api_key_here"
 
 type InputData struct {
 	Name   string  `json:"name"`
@@ -73,17 +76,17 @@ func InputHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	if os.Getenv("SECRET") != "" {
+		fmt.Println("env Secret used")
+		ExpectedAPIKey = os.Getenv("SECRET")
+	} else {
+		fmt.Println("NO SECRET FOUND USING FALLBACK")
+	}
 	mux := http.NewServeMux()
 	mux.Handle("/input", APIKeyMiddleware(http.HandlerFunc(InputHandler)))
+	prometheus.Unregister(collectors.NewGoCollector())
 	mux.Handle("/metrics", APIKeyMiddleware(promhttp.Handler()))
 
 	fmt.Println("Server is running at http://localhost:3000")
 	log.Fatal(http.ListenAndServe(":3000", mux))
 }
-
-var (
-	MPeopleNearSensore = promauto.NewGauge(prometheus.GaugeOpts{
-		Name: "people_near_sesore",
-		Help: "total nummber of people near a Sensore",
-	})
-)
