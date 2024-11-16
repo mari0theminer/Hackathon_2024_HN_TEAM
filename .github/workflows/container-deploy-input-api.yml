@@ -19,10 +19,12 @@ jobs:
         registry: ghcr.io
         username: ${{github.actor}}
         password: ${{secrets.GITHUB_TOKEN}}
+        
     - name: Build and push Docker images
       uses: docker/build-push-action@v6.7.0
       with:
-        file: dockerfile
+        context: ./inputAPI
+        file: ./inputAPI/dockerfile
         push: true
         tags: ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:latest, ghcr.io/mari0theminer/mari0theminer/hackathon_2024_hn_team-input-api:${{ github.run_number }}
               
