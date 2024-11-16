@@ -30,8 +30,8 @@ jobs:
         uses: docker/build-push-action@v2 # Update to v2 since v6.7.0 does not exist
         with:
           context: ./inputAPI
-          file: ./inputAPI/Dockerfile # Correct the path to the Dockerfile
+          file: ./inputAPI/Dockerfile 
           push: true
           tags: |
             ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:latest
-            ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:${{ github.run_number }} # Corrected the tag format
+            ghcr.io/mari0theminer/hackathon_2024_hn_team-input-api:${{ github.run_number }}
