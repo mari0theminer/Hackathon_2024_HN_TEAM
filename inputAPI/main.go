@@ -59,8 +59,9 @@ func InputHandler(w http.ResponseWriter, r *http.Request) {
 	if metric, ok := metrics[inputData.Name]; !ok {
 
 		metric = promauto.NewGauge(prometheus.GaugeOpts{
-			Name: inputData.Name,
-			Help: "_______",
+			Name:        inputData.Name,
+			Help:        "_______",
+			ConstLabels: map[string]string{},
 		})
 		metric.Set(inputData.Value)
 		metrics[inputData.Name] = metric
@@ -85,7 +86,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/input", APIKeyMiddleware(http.HandlerFunc(InputHandler)))
 	prometheus.Unregister(collectors.NewGoCollector())
-	mux.Handle("/metrics", APIKeyMiddleware(promhttp.Handler()))
+	mux.Handle("/metrics", promhttp.Handler())
 
 	fmt.Println("Server is running at http://localhost:3000")
 	log.Fatal(http.ListenAndServe(":3000", mux))
