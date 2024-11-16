@@ -847,20 +847,6 @@
     },
     {
       "type": "Feature",
-      "properties": {
-        "test": "test"
-      },
-      "geometry": {
-        "coordinates": [
-          9.20728247151655,
-          49.15555149905205
-        ],
-        "type": "Point"
-      },
-      "id": 38
-    },
-    {
-      "type": "Feature",
       "properties": {},
       "geometry": {
         "type": "Polygon",
